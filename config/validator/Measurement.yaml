@@ -1,0 +1,62 @@
+App\Entity\Measurement:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [location, date]
+            message: 'A forecast for this location and date already exists.'
+            errorPath: date
+            groups: [create, edit]
+
+    properties:
+        location:
+            - NotNull:
+                message: 'Choose a location.'
+                groups: [create, edit]
+        date:
+            - NotNull:
+                groups: [create, edit]
+            - GreaterThanOrEqual:
+                value: today
+                message: 'A new forecast cannot be for a past date.'
+                groups: [create]
+        temperature_c:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: -60
+                max: 60
+                groups: [create, edit]
+        cloudiness_pct:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: 0
+                max: 100
+                groups: [create, edit]
+        wind_direction_deg:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: 0
+                max: 359
+                groups: [create, edit]
+        pressure_hpa:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: 870
+                max: 1085
+                groups: [create, edit]
+        humidity_pct:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: 0
+                max: 100
+                groups: [create, edit]
+        wind_speed_kmh:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: 0
+                max: 400
+                groups: [create, edit]
